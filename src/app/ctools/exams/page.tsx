@@ -99,7 +99,7 @@ const ExamPage: React.FC = () => {
         const contents = await getJsonExamFileContents(selectedFolder, selectedFile);
         setExamContents(contents as ExamContents);
       } catch (error) {
-        console.error(error);
+        console.error('Error fetching exam contents:', error instanceof Error ? error.message : String(error));
       }
     }
   };
