@@ -1,14 +1,18 @@
 # File: .github/workflows/publish.yml
 name: publish-to-github-pages
 on:
+  # Runs on pushes targeting the default branch
   push:
-    branches:
-      - master
+    branches: ["main"]
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+  permissions:
+    contents: read
+    pages: write
+    id-token: write
 
 concurrency:
   group: "pages"
