@@ -54,6 +54,6 @@ export async function getJsonFileContents(folder: string, fileName: string) {
     const data = await fsPromises.readFile(filePath, 'utf8');
     return JSON.parse(data);
   } catch (err) {
-    throw new Error(`Error reading file ${filePath}: ${err}`);
+    throw new Error(`Error reading file ${filePath}: ${err instanceof Error ? err.message : err}`);
   }
 }

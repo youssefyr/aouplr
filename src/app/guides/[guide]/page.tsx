@@ -20,10 +20,10 @@ export default function RenderGuide({ params }: { params: { guide: string } }) {
           const contentData = await getGuideContent(`${guide}.md`);
           setContent(contentData);
         } catch (error) {
-          console.error('Error fetching guide content:', error);
+          console.error('Error fetching guide content:', error instanceof Error ? error.message : error);
         }
       };
-
+  
       fetchContent();
     }
   }, [guide]);

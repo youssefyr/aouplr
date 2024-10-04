@@ -36,7 +36,6 @@ export async function getExamsData() {
     },
   };
 }
-
 export async function getJsonExamFileContents(folder: string, fileName: string) {
   const examsDir = path.join(process.cwd(), "public", "data", "exams");
   const folderPath = path.join(examsDir, folder);
@@ -63,7 +62,7 @@ export async function getJsonExamFileContents(folder: string, fileName: string) 
     const data = await fsPromises.readFile(filePath, 'utf8');
     return JSON.parse(data);
   } catch (err) {
-    throw new Error(`Error reading file ${filePath}: ${err}`);
+    throw new Error(`Error reading file ${filePath}: ${err instanceof Error ? err.message : err}`);
   }
 }
 

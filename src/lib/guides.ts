@@ -15,12 +15,12 @@ export const getGuides = async () => {
 };
 
 export const getGuideContent = async (filename: string) => {
-    try {
-       const filePath = path.join(process.cwd(), "public", "data", "guides", filename);
-        const content = await fsPromises.readFile(filePath, 'utf8');
-        return content;
-    } catch (error) {
-        console.error(`Error reading guide content: ${error}`);
-        return "NULLL";
-    }
+  try {
+    const filePath = path.join(process.cwd(), "public", "data", "guides", filename);
+    const content = await fsPromises.readFile(filePath, 'utf8');
+    return content;
+  } catch (error) {
+    console.error(`Error reading guide content: ${error instanceof Error ? error.message : error}`);
+    return "NULLL";
+  }
 };
