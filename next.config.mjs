@@ -1,17 +1,33 @@
 import withPWA from 'next-pwa';
+import fs from 'fs';
+import path from 'path';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: true,      // Enable React strict mode for improved error handling
-    swcMinify: true,            // Enable SWC minification for improved performance
+    reactStrictMode: true,
+    swcMinify: true,
     compiler: {
-        removeConsole: process.env.NODE_ENV !== "development"     // Remove console.log in production
+        removeConsole: process.env.NODE_ENV !== "development"
+    },
+    webpack: (config, { isServer }) => {
+        if (!isServer) {
+            // Ensure the data folder is included in the build
+            const dataPath = path.resolve(__dirname, 'data');
+            if (fs.existsSync(dataPath)) {
+                config.module.rules.push({
+                    test: /\.(json)$/,
+                    include: [dataPath],
+                    type: 'asset/resource',
+                });
+            }
+        }
+        return config;
     }
 };
 
 export default withPWA({
-    dest: "public",         // destination directory for the PWA files
-    disable: process.env.NODE_ENV === "development",        // disable PWA in the development environment
-    register: true,         // register the PWA service worker
-    skipWaiting: true,      // skip waiting for service worker activation
+    dest: "public",
+    disable: process.env.NODE_ENV === "development",
+    register: true,
+    skipWaiting: true,
 })(nextConfig);

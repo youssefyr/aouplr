@@ -1,0 +1,17 @@
+{
+    "builds": [
+      {
+        "src": "next.config.mjs",
+        "use": "@vercel/next"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/data/(.*)",
+        "dest": "/data/$1"
+      }
+    ],
+    "files": [
+      "data/**/*"
+    ]
+  }
