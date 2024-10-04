@@ -1,5 +1,4 @@
-"use client"
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { getGuideContent, getGuides } from '@/lib/guides';
 import Link from 'next/link';
 import Navbar from '@/app/_components/navbar';
@@ -7,25 +6,7 @@ import ThemeSelect from '@/app/_components/themeselect';
 import Markdown from 'markdown-to-jsx'
 
 
-export default function RenderGuide({ params }: { params: { guide: string } }) {
-  const [content, setContent] = useState<string>('');
-  const guide = params.guide;
-
-  useEffect(() => {
-    if (guide) {
-      const fetchContent = async () => {
-        try {
-          const contentData = await getGuideContent(`${guide}.md`);
-          setContent(contentData);
-        } catch (error) {
-          console.error('Error fetching guide content:', error instanceof Error ? error.message : error);
-        }
-      };
-
-      fetchContent();
-    }
-  }, [guide]);
-
+export default function RenderGuide({ guide, content }: { guide: string, content: string }) {
   if (!content) return ( <div>
     <span className="loading loading-infinity loading-lg"></span> <div>Loading...</div></div>
   );
@@ -58,9 +39,16 @@ export default function RenderGuide({ params }: { params: { guide: string } }) {
   );
 };
 
-export async function generateStaticParams() {
+export async function getStaticPaths() {
   const guides = await getGuides();
-  return guides.map((guide: { path: string }) => ({
-    guide: guide.path.split('/').pop()?.replace('.md', ''),
+  const paths = guides.map((guide: { path: string }) => ({
+    params: { guide: guide.path.split('/').pop()?.replace('.md', '') },
   }));
+
+  return { paths, fallback: false };
+}
+
+export async function getStaticProps({ params }: { params: { guide: string } }) {
+  const content = await getGuideContent(`${params.guide}.md`);
+  return { props: { guide: params.guide, content } };
 }
