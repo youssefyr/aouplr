@@ -2,7 +2,7 @@ import withPWA from 'next-pwa';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    basePath: process.env.NODE_ENV === "development" ? "":"/aouplr",
+    basePath: process.env.NODE_ENV === "development" ? "":"/aouplr",  // <=== enables static exports
     reactStrictMode: true,
     swcMinify: true,
     compiler: {
