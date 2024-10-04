@@ -7,7 +7,8 @@ import ThemeSelect from '@/app/_components/themeselect';
 import Markdown from 'markdown-to-jsx'
 
 
-export default function renderGuide({ params }: { params: { guide: string } }) {
+export default function RenderGuide({ params }: { params: { guide: string } }) {
+
   const [content, setContent] = useState<string>('');
   const guide = params.guide;
 
@@ -29,7 +30,7 @@ export default function renderGuide({ params }: { params: { guide: string } }) {
 
   if (content == "NULLL") return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-2xl font-bold mb-4">Sorry, we can't seem to find this guide.</h1>
+      <h1 className="text-2xl font-bold mb-4">Sorry, we can&apos;t seem to find this guide.</h1>
       <Link href="/guides" className="btn btn-primary mb-4">
         Back to Guides
       </Link>

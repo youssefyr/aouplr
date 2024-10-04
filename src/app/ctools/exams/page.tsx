@@ -312,7 +312,7 @@ return (
                                     {times.map((time, idx) => (
                                         <tr key={idx} className="border-t">
                                             <td className="p-4">{time}</td>
-                                            {Object.entries(examContents).map(([date, details], index) => (
+                                            {Object.entries(examContents).map(([, details], index) => (
                                                 <td key={index} className="p-4">
                                                     {(details[time] as string[]).map((course, courseIdx) => (
                                                         <div key={courseIdx} className="mb-2">{course}</div>
