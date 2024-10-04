@@ -5,7 +5,6 @@ import path from 'path';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     basePath: process.env.NODE_ENV === "development" ? "/":"/aouplr",
-    output: "export",  // <=== enables static exports
     reactStrictMode: true,
     swcMinify: true,
     compiler: {
