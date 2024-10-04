@@ -47,6 +47,6 @@ jobs:
     needs: build
 
     steps:
-      - name: Publish to GitHub Pages 🚀
+      - name: Publish to GitHub Pages 🚀 
         id: deployment
         uses: actions/deploy-pages@v4
