@@ -1,5 +1,5 @@
 "use server"
-import fs from 'fs';
+import { promises as fsPromises } from 'fs';
 import path from 'path';
 
 interface Plan {
@@ -9,16 +9,17 @@ interface Plan {
 
 export async function getPlansData() {
   const plansDir = path.join(process.cwd(), 'public/data/plans');
-  const folders = fs.readdirSync(plansDir, { withFileTypes: true })
-    .filter(dirent => dirent.isDirectory())
+  const folders = await fsPromises.readdir(plansDir, { withFileTypes: true });
+  folders.filter(dirent => dirent.isDirectory())
     .map(dirent => dirent.name);
 
-  const plansData: Plan[] = folders.map(folder => {
-    const files = fs.readdirSync(path.join(plansDir, folder))
-      .filter(file => file.endsWith('.json'))
+  const plansData: Plan[] = await Promise.all(folders.map(async dirent => {
+    const folder = dirent.name;
+    const files = await fsPromises.readdir(path.join(plansDir, folder));
+    files.filter(file => file.endsWith('.json'))
       .map(file => file.replace('.json', ''));
     return { folder, files };
-  });
+  }));
 
   return {
     props: {
@@ -30,14 +31,14 @@ export async function getPlansData() {
 export async function getJsonFileContents(folder: string, fileName: string) {
   const plansDir = path.join(process.cwd(), 'public/data/plans');
   const folderPath = path.join(plansDir, folder);
-  const filePath = path.join(folderPath, `${fileName}.json`);
+  const filePath = path.join(folderPath, `${fileName}`);
 
   // Ensure the folder and file are within the expected directory
-  if (!fs.existsSync(folderPath) || !fs.lstatSync(folderPath).isDirectory()) {
+  if (!(await fsPromises.stat(folderPath)).isDirectory()) {
     throw new Error('Invalid folder');
   }
 
-  if (!fs.existsSync(filePath) || !fs.lstatSync(filePath).isFile()) {
+  if (!(await fsPromises.stat(filePath)).isFile()) {
     throw new Error('Invalid file');
   }
 
@@ -49,13 +50,10 @@ export async function getJsonFileContents(folder: string, fileName: string) {
     throw new Error('Path traversal detected');
   }
 
-  return new Promise((resolve, reject) => {
-    fs.readFile(filePath, 'utf8', (err, data) => {
-      if (err) {
-        reject(`Error reading file ${filePath}: ${err}`);
-      } else {
-        resolve(JSON.parse(data));
-      }
-    });
-  });
+  try {
+    const data = await fsPromises.readFile(filePath, 'utf8');
+    return JSON.parse(data);
+  } catch (err) {
+    throw new Error(`Error reading file ${filePath}: ${err}`);
+  }
 }

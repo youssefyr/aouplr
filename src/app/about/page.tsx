@@ -12,7 +12,7 @@ const About: React.FC = () => {
             <div className="card-body">
               <h2 className="card-title">Project Overview</h2>
               <p>
-                This project is built by cwawdaw with the aim of helping university students with common academic tasks. It provides tools for GPA calculation, course management, and guides to various resources that students might need.
+                This project is built by Youssef Reda with the aim of helping university students with common academic tasks. It provides tools for GPA calculation, course management, and guides to various resources that students might need.
               </p>
             </div>
           </div>
@@ -33,7 +33,7 @@ const About: React.FC = () => {
             <div className="card-body">
               <h2 className="card-title">Contact</h2>
               <p>
-              If you have any questions or feedback, feel free to reach out to cwawdaw. Your input is valuable and helps improve the project.
+              If you have any questions or feedback, feel free to reach out to Youssef Reda. Your input is valuable and helps improve the project.
               </p>
             </div>
           </div>

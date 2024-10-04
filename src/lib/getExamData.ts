@@ -1,5 +1,5 @@
 "use server"
-import fs from 'fs';
+import { promises as fsPromises } from 'fs';
 import path from 'path';
 
 interface Exam {
@@ -18,16 +18,17 @@ interface ExamContents {
 
 export async function getExamsData() {
   const examsDir = path.join(process.cwd(), 'public/data/exams');
-  const folders = fs.readdirSync(examsDir, { withFileTypes: true })
-    .filter(dirent => dirent.isDirectory())
+  const folders = await fsPromises.readdir(examsDir, { withFileTypes: true });
+  folders.filter(dirent => dirent.isDirectory())
     .map(dirent => dirent.name);
 
-  const examsData: Exam[] = folders.map(folder => {
-    const files = fs.readdirSync(path.join(examsDir, folder))
-      .filter(file => file.endsWith('.json'))
+  const examsData: Exam[] = await Promise.all(folders.map(async dirent => {
+    const folder = dirent.name;
+    const files = await fsPromises.readdir(path.join(examsDir, folder));
+    files.filter(file => file.endsWith('.json'))
       .map(file => file.replace('.json', ''));
     return { folder, files };
-  });
+  }));
   return {
     props: {
       exams: examsData,
@@ -38,14 +39,14 @@ export async function getExamsData() {
 export async function getJsonExamFileContents(folder: string, fileName: string) {
   const examsDir = path.join(process.cwd(), 'public/data/exams');
   const folderPath = path.join(examsDir, folder);
-  const filePath = path.join(folderPath, `${fileName}.json`);
+  const filePath = path.join(folderPath, `${fileName}`);
 
   // Ensure the folder and file are within the expected directory
-  if (!fs.existsSync(folderPath) || !fs.lstatSync(folderPath).isDirectory()) {
+  if (!(await fsPromises.stat(folderPath)).isDirectory()) {
     throw new Error('Invalid folder');
   }
 
-  if (!fs.existsSync(filePath) || !fs.lstatSync(filePath).isFile()) {
+  if (!(await fsPromises.stat(filePath)).isFile()) {
     throw new Error('Invalid file');
   }
 
@@ -57,27 +58,24 @@ export async function getJsonExamFileContents(folder: string, fileName: string) 
     throw new Error('Path traversal detected');
   }
 
-  return new Promise((resolve, reject) => {
-    fs.readFile(filePath, 'utf8', (err, data) => {
-      if (err) {
-        reject(`Error reading file ${filePath}: ${err}`);
-      } else {
-        resolve(JSON.parse(data));
-      }
-    });
-  });
+  try {
+    const data = await fsPromises.readFile(filePath, 'utf8');
+    return JSON.parse(data);
+  } catch (err) {
+    throw new Error(`Error reading file ${filePath}: ${err}`);
+  }
 }
 
 export const getAllCourses = async (): Promise<{ [key: string]: string[] }> => {
     const dataDir = path.join(process.cwd(), 'public/data/exams');
-    const folders = fs.readdirSync(dataDir);
+    const folders = await fsPromises.readdir(dataDir);
     const allCourses: Set<string> = new Set();
   
     for (const folder of folders) {
-      const files = fs.readdirSync(path.join(dataDir, folder));
+      const files = await fsPromises.readdir(path.join(dataDir, folder));
       for (const file of files) {
         const filePath = path.join(dataDir, folder, file);
-        const fileContents = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        const fileContents = JSON.parse(await fsPromises.readFile(filePath, 'utf8'));
         Object.values(fileContents as ExamContents).forEach(details => {
           Object.values(details).forEach(courses => {
             if (Array.isArray(courses)) {
@@ -94,15 +92,15 @@ export const getAllCourses = async (): Promise<{ [key: string]: string[] }> => {
 
 export const getAllExamContentsWithTimes = async (): Promise<{ [key: string]: string[] }> => {
     const dataDir = path.join(process.cwd(), 'public/data/exams');
-    const folders = fs.readdirSync(dataDir);
+    const folders = await fsPromises.readdir(dataDir);
     const allExamContentsWithTimes: { [key: string]: string[] } = {};
   
     for (const folder of folders) {
       allExamContentsWithTimes[folder] = [];
-      const files = fs.readdirSync(path.join(dataDir, folder));
+      const files = await fsPromises.readdir(path.join(dataDir, folder));
       for (const file of files) {
         const filePath = path.join(dataDir, folder, file);
-        const fileContents = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        const fileContents = JSON.parse(await fsPromises.readFile(filePath, 'utf8'));
         Object.entries(fileContents as ExamContents).forEach(([date, details]) => {
           Object.entries(details).forEach(([time, courses]) => {
             if (time !== 'dayname' && Array.isArray(courses)) {
