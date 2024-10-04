@@ -17,9 +17,7 @@ interface ExamContents {
 }
 
 export async function getExamsData() {
-  const isDevelopment = process.env.NODE_ENV === 'development';
-  const baseDir = isDevelopment ? './public/data/exams' : './data/exams';
-  const examsDir = path.resolve(baseDir);
+  const examsDir = path.join(process.cwd(), 'public', 'data/exams');
   const folders = await fsPromises.readdir(examsDir, { withFileTypes: true });
   folders.filter(dirent => dirent.isDirectory())
     .map(dirent => dirent.name);
@@ -39,9 +37,7 @@ export async function getExamsData() {
 }
 
 export async function getJsonExamFileContents(folder: string, fileName: string) {
-  const isDevelopment = process.env.NODE_ENV === 'development';
-  const baseDir = isDevelopment ? './public/data/exams' : './data/exams';
-  const examsDir = path.resolve(baseDir);
+  const examsDir = path.join(process.cwd(), 'public', 'data/exams');
   const folderPath = path.join(examsDir, folder);
   const filePath = path.join(folderPath, `${fileName}`);
 
@@ -71,9 +67,7 @@ export async function getJsonExamFileContents(folder: string, fileName: string) 
 }
 
 export const getAllCourses = async (): Promise<{ [key: string]: string[] }> => {
-  const isDevelopment = process.env.NODE_ENV === 'development';
-  const baseDir = isDevelopment ? './public/data/exams' : './data/exams';
-  const dataDir = path.resolve(baseDir);
+  const dataDir = path.join(process.cwd(), 'public', 'data/exams');
   const folders = await fsPromises.readdir(dataDir);
     const allCourses: Set<string> = new Set();
   
@@ -97,9 +91,7 @@ export const getAllCourses = async (): Promise<{ [key: string]: string[] }> => {
 
 
 export const getAllExamContentsWithTimes = async (): Promise<{ [key: string]: string[] }> => {
-  const isDevelopment = process.env.NODE_ENV === 'development';
-  const baseDir = isDevelopment ? './public/data/exams' : './data/exams';
-  const dataDir = path.resolve(baseDir);
+  const dataDir = path.join(process.cwd(), 'public', 'data/exams');
   const folders = await fsPromises.readdir(dataDir);
     const allExamContentsWithTimes: { [key: string]: string[] } = {};
   
