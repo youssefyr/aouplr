@@ -6,7 +6,11 @@ import ThemeSelect from '@/app/_components/themeselect';
 import Markdown from 'markdown-to-jsx'
 
 
-export default function RenderGuide({ guide, content }: { guide: string, content: string }) {
+export default async function RenderGuide({ params }: { params: { guide: string } }) {
+  const guide = params.guide;
+  const content = await getGuideContent(`${params.guide}.md`);
+
+          
   if (!content) return ( <div>
     <span className="loading loading-infinity loading-lg"></span> <div>Loading...</div></div>
   );
@@ -46,9 +50,4 @@ export async function getStaticPaths() {
   }));
 
   return { paths, fallback: false };
-}
-
-export async function getStaticProps({ params }: { params: { guide: string } }) {
-  const content = await getGuideContent(`${params.guide}.md`);
-  return { props: { guide: params.guide, content } };
 }
