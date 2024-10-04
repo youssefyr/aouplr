@@ -12,7 +12,7 @@ const nextConfig = {
     webpack: (config, { isServer }) => {
         if (!isServer) {
             // Ensure the data folder is included in the build
-            const dataPath = path.resolve(process.cwd(), 'data');
+            const dataPath = path.resolve(process.cwd(), 'public/data');
             if (fs.existsSync(dataPath)) {
                 config.module.rules.push({
                     test: /\.(json)$/,
