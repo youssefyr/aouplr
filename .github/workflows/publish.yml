@@ -31,15 +31,15 @@ jobs:
 
       - name: Setup Pages ⚙️
         uses: actions/configure-pages@v5
-        with:
-          static_site_generator: next
-          generator_config_file: ./next.config.mjs
+        #with:
+          #static_site_generator: next
+          #generator_config_file: ./next.config.mjs
 
       - name: Build with Next.js 🏗️
         run: pnpm run build
 
       - name: Upload artifact 📡
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: ./out
 
