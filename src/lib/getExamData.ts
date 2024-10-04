@@ -19,7 +19,7 @@ interface ExamContents {
 export async function getExamsData() {
 
   const isDevelopment = process.env.NODE_ENV === 'development';
-  const baseDir = isDevelopment ? './public/data/exams' : './data/exams';
+  const baseDir = isDevelopment ? './public/data/exams' : './public/data/exams';
   const examsDir = path.join(path.resolve(baseDir));
   const folders = await fsPromises.readdir(examsDir, { withFileTypes: true });
   folders.filter(dirent => dirent.isDirectory())
@@ -41,7 +41,7 @@ export async function getExamsData() {
 
 export async function getJsonExamFileContents(folder: string, fileName: string) {
   const isDevelopment = process.env.NODE_ENV === 'development';
-  const baseDir = isDevelopment ? './public/data/exams' : './data/exams';
+  const baseDir = isDevelopment ? './public/data/exams' : './public/data/exams';
   const examsDir = path.join(path.resolve(baseDir));
   const folderPath = path.join(examsDir, folder);
   const filePath = path.join(folderPath, `${fileName}`);
@@ -73,7 +73,7 @@ export async function getJsonExamFileContents(folder: string, fileName: string) 
 
 export const getAllCourses = async (): Promise<{ [key: string]: string[] }> => {
   const isDevelopment = process.env.NODE_ENV === 'development';
-  const baseDir = isDevelopment ? './public/data/exams' : './data/exams';
+  const baseDir = isDevelopment ? './public/data/exams' : './public/data/exams';
   const dataDir = path.join(path.resolve(baseDir));
   const folders = await fsPromises.readdir(dataDir);
     const allCourses: Set<string> = new Set();
@@ -99,7 +99,7 @@ export const getAllCourses = async (): Promise<{ [key: string]: string[] }> => {
 
 export const getAllExamContentsWithTimes = async (): Promise<{ [key: string]: string[] }> => {
   const isDevelopment = process.env.NODE_ENV === 'development';
-  const baseDir = isDevelopment ? './public/data/exams' : './data/exams';
+  const baseDir = isDevelopment ? './public/data/exams' : './public/data/exams';
   const dataDir = path.join(path.resolve(baseDir));
   const folders = await fsPromises.readdir(dataDir);
     const allExamContentsWithTimes: { [key: string]: string[] } = {};

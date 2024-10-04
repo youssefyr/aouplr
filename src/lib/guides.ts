@@ -4,7 +4,7 @@ import path from 'path';
 
 export const getGuides = async () => {
   const isDevelopment = process.env.NODE_ENV === 'development';
-  const baseDir = isDevelopment ? './public/data/guides' : './data/guides';
+  const baseDir = isDevelopment ? './public/data/guides' : './public/data/guides';
   const guidesDir = path.join(path.resolve(baseDir));
   const filenames = await fsPromises.readdir(guidesDir);
   const guides = filenames
@@ -19,7 +19,7 @@ export const getGuides = async () => {
 export const getGuideContent = async (filename: string) => {
     try {
         const isDevelopment = process.env.NODE_ENV === 'development';
-        const baseDir = isDevelopment ? './public/data/guides' : './data/guides';
+        const baseDir = isDevelopment ? './public/data/guides' : './public/data/guides';
         const filePath = path.join(path.resolve(baseDir), filename);
         const content = await fsPromises.readFile(filePath, 'utf8');
         return content;
