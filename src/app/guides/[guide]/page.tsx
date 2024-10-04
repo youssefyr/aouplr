@@ -1,29 +1,16 @@
 "use client"
 import React, { useEffect, useState } from 'react';
-import { getGuides, getGuideContent } from '@/lib/guides';
+import { getGuideContent } from '@/lib/guides';
 import Link from 'next/link';
 import Navbar from '@/app/_components/navbar';
 import ThemeSelect from '@/app/_components/themeselect';
 import Markdown from 'markdown-to-jsx'
 
 
-interface GuideProps {
-  name: string;
-  path: string;
-}
-
 export default function renderGuide({ params }: { params: { guide: string } }) {
-  const [guidess, setGuides] = useState<GuideProps[]>([]);
   const [content, setContent] = useState<string>('');
   const guide = params.guide;
-  useEffect(() => {
-    const fetchGuides = async () => {
-      const guidesData = getGuides();
-      setGuides(guidesData);
-    };
 
-    fetchGuides();
-  }, []);
 
   useEffect(() => {
     if (guide) {
@@ -38,6 +25,15 @@ export default function renderGuide({ params }: { params: { guide: string } }) {
 
   if (!content) return ( <div>
     <span className="loading loading-infinity loading-lg"></span> <div>Loading...</div></div>
+  );
+
+  if (content == "NULLL") return (
+    <div className="flex flex-col items-center justify-center h-screen">
+      <h1 className="text-2xl font-bold mb-4">Sorry, we can't seem to find this guide.</h1>
+      <Link href="/guides" className="btn btn-primary mb-4">
+        Back to Guides
+      </Link>
+    </div>
   );
   console.log(content)
 

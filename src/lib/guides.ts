@@ -2,11 +2,6 @@
 import fs from 'fs';
 import path from 'path';
 
-interface Guide {
-    name: string;
-    path: string;
-  }
-
 export const getGuides = () => {
   const guidesDir = path.join(process.cwd(), 'public/data/guides');
   const filenames = fs.readdirSync(guidesDir);
@@ -20,7 +15,12 @@ export const getGuides = () => {
 };
 
 export const getGuideContent = (filename: string) => {
-  const filePath = path.join(process.cwd(), 'public/data/guides', filename);
-  const content = fs.readFileSync(filePath, 'utf8');
-  return content;
+    try {
+        const filePath = path.join(process.cwd(), 'public/data/guides', filename);
+        const content = fs.readFileSync(filePath, 'utf8');
+        return content;
+    } catch (error) {
+        console.error(`Error reading guide content: ${error}`);
+        return "NULLL";
+    }
 };

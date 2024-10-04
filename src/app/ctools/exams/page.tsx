@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '@/app/_components/navbar';
 import ThemeSelect from '@/app/_components/themeselect';
 import { getExamsData, getJsonExamFileContents, getAllCourses, getAllExamContentsWithTimes } from "@/lib/getExamData";
-import { stringify } from 'querystring';
 
 interface Exam {
   folder: string;
