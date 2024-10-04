@@ -16,8 +16,12 @@ export default function RenderGuide({ params }: { params: { guide: string } }) {
   useEffect(() => {
     if (guide) {
       const fetchContent = async () => {
-        const contentData = await getGuideContent(`${guide}.md`);
-        setContent(contentData);
+        try {
+          const contentData = await getGuideContent(`${guide}.md`);
+          setContent(contentData);
+        } catch (error) {
+          console.error('Error fetching guide content:', error);
+        }
       };
 
       fetchContent();
