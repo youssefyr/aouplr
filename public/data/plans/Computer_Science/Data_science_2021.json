@@ -1,0 +1,215 @@
+{
+    "studyplan_name": "Data science 2021",
+    "years": {
+        "First Year": {
+            "1st Term": {
+                "totalch": 13,
+                "courses": [
+                    {
+                        "code": "EL111",
+                        "title": "English Communication Skills I",
+                        "hours": 3,
+                        "prerequisite": "EL099"
+                    },
+                    {
+                        "code": "GR118",
+                        "title": "Life Skills and Coexistence",
+                        "hours": 3,
+                        "prerequisite": "-"
+                    },
+                    {
+                        "code": "GT101",
+                        "title": "Computing Essentials",
+                        "hours": 3,
+                        "prerequisite": "-"
+                    },
+                    {
+                        "code": "MST129",
+                        "title": "Applied Calculus",
+                        "hours": 4,
+                        "prerequisite": "EL099"
+                    }
+                ]
+            },
+            "2nd Term": {
+                "totalch": 14,
+                "courses": [
+                    {
+                        "code": "AR113",
+                        "title": "Arabic Communication Skills",
+                        "hours": 3,
+                        "prerequisite": "-"
+                    },
+                    {
+                        "code": "EL112",
+                        "title": "English Communication Skills II",
+                        "hours": 3,
+                        "prerequisite": "EL111"
+                    },
+                    {
+                        "code": "MT131",
+                        "title": "Discrete Mathematics",
+                        "hours": 4,
+                        "prerequisite": "EL111"
+                    },
+                    {
+                        "code": "MT132",
+                        "title": "Linear Algebra",
+                        "hours": 4,
+                        "prerequisite": "EL111"
+                    }
+                ]
+            }
+        },
+        "Second Year": {
+            "1st Term": {
+                "totalch": 14,
+                "courses": [
+                    {
+                        "code": "GB102",
+                        "title": "Principles of Entrepreneurship for NonSpecialists",
+                        "hours": 3,
+                        "prerequisite": "-"
+                    },
+                    {
+                        "code": "M110",
+                        "title": "Python Programming",
+                        "hours": 8,
+                        "prerequisite": "EL111"
+                    },
+                    {
+                        "code": "A module from University Requirement/Elective",
+                        "title": null,
+                        "hours": 3,
+                        "prerequisite": "-"
+                    }
+                ]
+            },
+            "2nd Term": {
+                "totalch": 20,
+                "courses": [
+                    {
+                        "code": "TM112",
+                        "title": "Introduction to Computing and Information Technology",
+                        "hours": 8,
+                        "prerequisite": "M110"
+                    },
+                    {
+                        "code": "M140",
+                        "title": "Introducing to Statistics",
+                        "hours": 8,
+                        "prerequisite": "EL111"
+                    },
+                    {
+                        "code": "TM260",
+                        "title": "Ethics, Law and the Governance in IT",
+                        "hours": 4,
+                        "prerequisite": "M110"
+                    }
+                ]
+            }
+        },
+        "Third Year": {
+            "1st Term": {
+                "totalch": 16,
+                "courses": [
+                    {
+                        "code": "M218",
+                        "title": "Relational Databases",
+                        "hours": 4,
+                        "prerequisite": "M110, MT131"
+                    },
+                    {
+                        "code": "M269",
+                        "title": "Algorithms, Data Structure and Computability",
+                        "hours": 8,
+                        "prerequisite": "M110 and MT131"
+                    },
+                    {
+                        "code": "MT248",
+                        "title": "Analysing Data",
+                        "hours": 4,
+                        "prerequisite": "M140"
+                    }
+                ]
+            },
+            "2nd Term": {
+                "totalch": 19,
+                "courses": [
+                    {
+                        "code": "M238",
+                        "title": "Data Visualization",
+                        "hours": 4,
+                        "prerequisite": "M110"
+                    },
+                    {
+                        "code": "MST224",
+                        "title": "Mathematical Methods",
+                        "hours": 8,
+                        "prerequisite": "MST129 & MT132"
+                    },
+                    {
+                        "code": "MT249",
+                        "title": "Practical Modern Statistics",
+                        "hours": 4,
+                        "prerequisite": "MT248"
+                    },
+                    {
+                        "code": "Faculty Requirement / Elective",
+                        "title": null,
+                        "hours": 3,
+                        "prerequisite": "-"
+                    }
+                ]
+            }
+        },
+        "Fourth Year": {
+            "1st Term": {
+                "totalch": 20,
+                "courses": [
+                    {
+                        "code": "M348",
+                        "title": "Applied Statistics Modelling",
+                        "hours": 8,
+                        "prerequisite": "MT248"
+                    },
+                    {
+                        "code": "TM351",
+                        "title": "Data Management and Analysis",
+                        "hours": 8,
+                        "prerequisite": "M269"
+                    },
+                    {
+                        "code": "TM471A",
+                        "title": "Graduation Project \u2013 Part A",
+                        "hours": 4,
+                        "prerequisite": "M348 or TM358 or TM351"
+                    }
+                ]
+            },
+            "2nd Term": {
+                "totalch": 15,
+                "courses": [
+                    {
+                        "code": "TM358",
+                        "title": "Machine Learning and Artificial",
+                        "hours": 8,
+                        "prerequisite": "M269"
+                    },
+                    {
+                        "code": "TM471B",
+                        "title": "Graduation Project",
+                        "hours": 4,
+                        "prerequisite": "TM471A"
+                    },
+                    {
+                        "code": "Faculty Requirement / Elective",
+                        "title": null,
+                        "hours": 3,
+                        "prerequisite": null
+                    }
+                ]
+            }
+        }
+    }
+}

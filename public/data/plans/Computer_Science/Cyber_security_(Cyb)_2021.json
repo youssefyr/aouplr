@@ -1,0 +1,203 @@
+{
+    "studyplan_name": "Cyber security (Cyb) 2021",
+    "years": {
+        "First Year": {
+            "1st Term": {
+                "totalch": 13,
+                "courses": [
+                    {
+                        "code": "EL111",
+                        "title": "English Communication Skills I",
+                        "hours": 3,
+                        "prerequisite": "EL099"
+                    },
+                    {
+                        "code": "GR118",
+                        "title": "Life Skills and Coexistence",
+                        "hours": 3,
+                        "prerequisite": "-"
+                    },
+                    {
+                        "code": "GT101",
+                        "title": "Computing Essentials",
+                        "hours": 3,
+                        "prerequisite": "-"
+                    },
+                    {
+                        "code": "MST129",
+                        "title": "Applied Calculus",
+                        "hours": 4,
+                        "prerequisite": "EL099"
+                    }
+                ]
+            },
+            "2nd Term": {
+                "totalch": 14,
+                "courses": [
+                    {
+                        "code": "AR113",
+                        "title": "Arabic Communication Skills",
+                        "hours": 3,
+                        "prerequisite": "-"
+                    },
+                    {
+                        "code": "EL112",
+                        "title": "English Communication Skills II",
+                        "hours": 3,
+                        "prerequisite": "EL111"
+                    },
+                    {
+                        "code": "MT131",
+                        "title": "Discrete Mathematics",
+                        "hours": 4,
+                        "prerequisite": "EL111"
+                    },
+                    {
+                        "code": "MT132",
+                        "title": "Linear Algebra",
+                        "hours": 4,
+                        "prerequisite": "EL111"
+                    }
+                ]
+            }
+        },
+        "Second Year": {
+            "1st Term": {
+                "totalch": 14,
+                "courses": [
+                    {
+                        "code": "GB102",
+                        "title": "Principles of Entrepreneurship for NonSpecialists",
+                        "hours": 3,
+                        "prerequisite": "-"
+                    },
+                    {
+                        "code": "M110",
+                        "title": "Python Programming",
+                        "hours": 8,
+                        "prerequisite": "EL111"
+                    },
+                    {
+                        "code": null,
+                        "title": "A module from University Requirement/Elective",
+                        "hours": 3,
+                        "prerequisite": "-"
+                    }
+                ]
+            },
+            "2nd Term": {
+                "totalch": 20,
+                "courses": [
+                    {
+                        "code": "TM112",
+                        "title": "Introduction to Computing and Information Technology- 2",
+                        "hours": 8,
+                        "prerequisite": "M110"
+                    },
+                    {
+                        "code": "TM129",
+                        "title": "Technologies in practice",
+                        "hours": 8,
+                        "prerequisite": "M110"
+                    },
+                    {
+                        "code": null,
+                        "title": "Faculty Elective",
+                        "hours": 3,
+                        "prerequisite": null
+                    }
+                ]
+            }
+        },
+        "Third Year": {
+            "1st Term": {
+                "totalch": 16,
+                "courses": [
+                    {
+                        "code": "TT284",
+                        "title": "Web technologies",
+                        "hours": 8,
+                        "prerequisite": "TM112"
+                    },
+                    {
+                        "code": "T216A",
+                        "title": "Cisco networking (CCNA) part1",
+                        "hours": 8,
+                        "prerequisite": "TM112"
+                    }
+                ]
+            },
+            "2nd Term": {
+                "totalch": 19,
+                "courses": [
+                    {
+                        "code": "T216B",
+                        "title": "Cisco networking (CCNA) part2",
+                        "hours": 8,
+                        "prerequisite": "T216A"
+                    },
+                    {
+                        "code": "TM256",
+                        "title": "Cyber Security",
+                        "hours": 8,
+                        "prerequisite": "TM129"
+                    },
+                    {
+                        "code": "TM260",
+                        "title": "Ethics, Law and the Governance in IT",
+                        "hours": 4,
+                        "prerequisite": "TM256"
+                    }
+                ]
+            }
+        },
+        "Fourth Year": {
+            "1st Term": {
+                "totalch": 20,
+                "courses": [
+                    {
+                        "code": "TM311",
+                        "title": "Information security",
+                        "hours": 8,
+                        "prerequisite": "T216B"
+                    },
+                    {
+                        "code": "TM359",
+                        "title": "System penetration testing",
+                        "hours": 8,
+                        "prerequisite": "TM256"
+                    },
+                    {
+                        "code": "TM471A",
+                        "title": "Graduation Project-A",
+                        "hours": 4,
+                        "prerequisite": "TM311 or TM359 or T318"
+                    }
+                ]
+            },
+            "2nd Term": {
+                "totalch": 15,
+                "courses": [
+                    {
+                        "code": "T318",
+                        "title": "Applied Network Security",
+                        "hours": 8,
+                        "prerequisite": "T216B"
+                    },
+                    {
+                        "code": "TM471B",
+                        "title": "Graduation Project-B",
+                        "hours": 4,
+                        "prerequisite": "TM471A"
+                    },
+                    {
+                        "code": null,
+                        "title": "Faculty Elective",
+                        "hours": 3,
+                        "prerequisite": null
+                    }
+                ]
+            }
+        }
+    }
+}
