@@ -8,7 +8,9 @@ interface Plan {
 }
 
 export async function getPlansData() {
-  const plansDir = path.join(process.cwd(), 'public', 'data/plans');
+  const isDevelopment = process.env.NODE_ENV === 'development';
+  const baseDir = isDevelopment ? './public/data/plans' : './data/plans';
+  const plansDir = path.join(path.resolve(baseDir));
   const folders = await fsPromises.readdir(plansDir, { withFileTypes: true });
   folders.filter(dirent => dirent.isDirectory())
     .map(dirent => dirent.name);
@@ -29,7 +31,9 @@ export async function getPlansData() {
 }
 
 export async function getJsonFileContents(folder: string, fileName: string) {
-  const plansDir = path.join(process.cwd(), 'public', 'data/plans');
+  const isDevelopment = process.env.NODE_ENV === 'development';
+  const baseDir = isDevelopment ? './public/data/plans' : './data/plans';
+  const plansDir = path.join(path.resolve(baseDir));
   const folderPath = path.join(plansDir, folder);
   const filePath = path.join(folderPath, `${fileName}`);
 
