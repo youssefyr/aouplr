@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react';
-import { getGuideContent } from '@/lib/guides';
+import { getGuideContent, getGuides } from '@/lib/guides';
 import Link from 'next/link';
 import Navbar from '@/app/_components/navbar';
 import ThemeSelect from '@/app/_components/themeselect';
@@ -8,10 +8,8 @@ import Markdown from 'markdown-to-jsx'
 
 
 export default function RenderGuide({ params }: { params: { guide: string } }) {
-
   const [content, setContent] = useState<string>('');
   const guide = params.guide;
-
 
   useEffect(() => {
     if (guide) {
@@ -23,7 +21,7 @@ export default function RenderGuide({ params }: { params: { guide: string } }) {
           console.error('Error fetching guide content:', error instanceof Error ? error.message : error);
         }
       };
-  
+
       fetchContent();
     }
   }, [guide]);
@@ -59,3 +57,10 @@ export default function RenderGuide({ params }: { params: { guide: string } }) {
     </div>
   );
 };
+
+export async function generateStaticParams() {
+  const guides = await getGuides();
+  return guides.map((guide: { path: string }) => ({
+    guide: guide.path.split('/').pop()?.replace('.md', ''),
+  }));
+}
