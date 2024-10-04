@@ -1,5 +1,5 @@
 import React from 'react';
-import { getGuideContent } from '@/lib/guides';
+import { getGuideContent, getGuides } from '@/lib/guides';
 import Link from 'next/link';
 import Navbar from '@/app/_components/navbar';
 import ThemeSelect from '@/app/_components/themeselect';
@@ -42,3 +42,10 @@ export default async function RenderGuide({ params }: { params: { guide: string 
     </div>
   );
 };
+
+export async function generateStaticParams() {
+  const guides = await getGuides();
+  return guides.map((guide: { path: string }) => ({
+    guide: guide.path.split('/').pop()?.replace('.md', ''),
+  }));
+}
