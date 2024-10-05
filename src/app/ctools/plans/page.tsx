@@ -5,8 +5,8 @@ import ThemeSelect from '@/app/_components/themeselect';
 import { getPlansData, getJsonFileContents } from "../../../lib/getPlansData";
 
 interface Plan {
-  folder: string;
-  files: string[];
+  type: string;
+  name: string;
 }
 
 interface StudyPlan {
@@ -30,10 +30,16 @@ interface Course {
   prerequisite: string | null;
 }
 
+const cleanType = (type: string): string => {
+  return type
+    .replace(/_/g, ' ')
+    .replace(/^\w/, c => c.toUpperCase());
+};
+
 const Page: React.FC = () => {
   const [plans, setPlans] = useState<Plan[] | null>(null);
-  const [selectedFolder, setSelectedFolder] = useState<string | null>(null);
-  const [selectedFile, setSelectedFile] = useState<string | null>(null);
+  const [selectedType, setSelectedType] = useState<string | null>(null);
+  const [selectedName, setSelectedName] = useState<string | null>(null);
   const [planContents, setPlanContents] = useState<StudyPlan | null>(null);
 
   useEffect(() => {
@@ -44,21 +50,21 @@ const Page: React.FC = () => {
     fetchPlans();
   }, []);
 
-  const handleFolderChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedFolder(event.target.value);
-    setSelectedFile(null);
+  const handleTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedType(event.target.value);
+    setSelectedName(null);
     setPlanContents(null);
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedFile(event.target.value);
+  const handleNameChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedName(event.target.value);
     setPlanContents(null);
   };
 
   const handleViewPlan = async () => {
-    if (selectedFolder && selectedFile) {
+    if (selectedType && selectedName) {
       try {
-        const contents = await getJsonFileContents(selectedFolder, selectedFile) as StudyPlan;
+        const contents = await getJsonFileContents(selectedType, selectedName) as StudyPlan;
         setPlanContents(contents);
       } catch (error) {
         console.error(error);
@@ -66,52 +72,54 @@ const Page: React.FC = () => {
     }
   };
 
-  const handleBackToFolders = () => {
-    setSelectedFolder(null);
-    setSelectedFile(null);
+  const handleBackToTypes = () => {
+    setSelectedType(null);
+    setSelectedName(null);
     setPlanContents(null);
   };
 
-  const handleBackToFiles = () => {
-    setSelectedFile(null);
+  const handleBackToNames = () => {
+    setSelectedName(null);
     setPlanContents(null);
   };
 
   if (!plans) return <div>Loading...</div>;
 
+  const types = Array.from(new Set(plans.map(plan => plan.type)));
+
   return (
     <div className="container mx-auto p-4">
       <Navbar />
-      {!selectedFolder ? (
+      {!selectedType ? (
         <div>
-          <h2 className="text-xl font-bold mb-4">Search Plans - Select a Folder</h2>
-          <select className="select select-bordered w-full max-w-xs" onChange={handleFolderChange}>
-            <option value="">Select a folder</option>
-            {plans.map((plan, index) => (
-              <option key={index} value={plan.folder}>{plan.folder}</option>
+          <h2 className="text-xl font-bold mb-4">Search Plans - Select a Program</h2>
+          <select className="select select-bordered w-full max-w-xs" onChange={handleTypeChange}>
+            <option value="">Select a Program</option>
+            {types.map((type, index) => (
+              <option key={index} value={type}>{type}</option>
             ))}
           </select>
         </div>
-      ) : !selectedFile ? (
+      ) : !selectedName ? (
         <div>
-          <button className="btn btn-secondary mb-4" onClick={handleBackToFolders}>Back</button>
-          <h2 className="text-xl font-bold mb-4">Select a Plan</h2>
-          <select className="select select-bordered w-full max-w-xs" onChange={handleFileChange}>
+          <button className="btn btn-secondary mb-4" onClick={handleBackToTypes}>Back</button>
+          <h2 className="text-xl font-bold mb-4">Select a Study Plan - Inside {cleanType(selectedType)}</h2>
+          <select className="select select-bordered w-full max-w-xs" onChange={handleNameChange}>
             <option value="">Select a plan</option>
-            {plans.find(plan => plan.folder === selectedFolder)?.files.map((file, index) => (
-              <option key={index} value={file}>{file}</option>
+            {plans.filter(plan => plan.type === selectedType).map((plan, index) => (
+              <option key={index} value={plan.name}>{plan.name}</option>
             ))}
           </select>
         </div>
       ) : !planContents ? (
         <div>
-          <button className="btn btn-secondary mb-4" onClick={handleBackToFiles}>Back</button>
-          <h2 className="text-xl font-bold mb-4">View Plan</h2>
+          <button className="btn btn-secondary mb-4" onClick={handleBackToNames}>Back</button>
+          <h2 className="text-xl font-bold mb-4">View Plan of [{cleanType(selectedName)}]</h2>
           <button className="btn btn-primary" onClick={handleViewPlan}>View Plan</button>
         </div>
       ) : (
         <div>
-          <button className="btn btn-secondary mb-4" onClick={handleBackToFiles}>Back</button>
+          <button className="btn btn-secondary mb-4" onClick={handleBackToNames}>Back</button>
           <h2 className="text-xl font-bold mb-4">{planContents.studyplan_name}</h2>
           {Object.entries(planContents.years).map(([year, terms], yearIndex) => (
             <div key={yearIndex} className="mb-4">
