@@ -9,31 +9,40 @@ interface Plan {
 
 export async function getPlansData() {
   const plansDir = path.join(process.cwd(), "public", "data", "plans");
-  const folders = await fsPromises.readdir(plansDir, { withFileTypes: true });
-  folders.filter(dirent => dirent.isDirectory())
-    .map(dirent => dirent.name);
+  console.log(`Reading plans directory: ${plansDir}`);
+  const folderNames = await fsPromises.readdir(plansDir);
+  console.log(`Found plan folders: ${folderNames}`);
 
-  const plansData: Plan[] = await Promise.all(folders.map(async dirent => {
-    const folder = dirent.name;
-    const files = await fsPromises.readdir(path.join(plansDir, folder));
-    files.filter(file => file.endsWith('.json'))
-      .map(file => file.replace('.json', ''));
-    return { folder, files };
+  const plansData: (Plan | null)[] = await Promise.all(folderNames.map(async folder => {
+    const folderPath = path.join(plansDir, folder);
+    const stat = await fsPromises.stat(folderPath);
+    if (stat.isDirectory()) {
+      const files = await fsPromises.readdir(folderPath);
+      const jsonFiles = files.filter(file => file.endsWith('.json')).map(file => file.replace('.json', ''));
+      console.log(`Found plan files in folder ${folder}: ${jsonFiles}`);
+      return { folder, files: jsonFiles };
+    } else {
+      return null;
+    }
   }));
+  
+  const filteredPlansData: Plan[] = plansData.filter(plan => plan !== null) as Plan[];
 
   return {
     props: {
-      plans: plansData,
+      plans: filteredPlansData,
     },
   };
 }
 
+
 export async function getJsonFileContents(folder: string, fileName: string) {
   const plansDir = path.join(process.cwd(), "public", "data", "plans");
   const folderPath = path.join(plansDir, folder);
-  const filePath = path.join(folderPath, `${fileName}`);
+  const filePath = path.join(folderPath, `${fileName}.json`);
 
-  // Ensure the folder and file are within the expected directory
+  console.log(`Reading plan file: ${filePath}`);
+
   if (!(await fsPromises.stat(folderPath)).isDirectory()) {
     throw new Error('Invalid folder');
   }
@@ -42,7 +51,6 @@ export async function getJsonFileContents(folder: string, fileName: string) {
     throw new Error('Invalid file');
   }
 
-  // Resolve the paths to ensure they are within the plansDir
   const resolvedFolderPath = path.resolve(folderPath);
   const resolvedFilePath = path.resolve(filePath);
 
