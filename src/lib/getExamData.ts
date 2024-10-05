@@ -36,6 +36,7 @@ export async function getExamsData() {
     },
   };
 }
+//
 export async function getJsonExamFileContents(folder: string, fileName: string) {
   const examsDir = path.join(process.cwd(), "public", "data", "exams");
   const folderPath = path.join(examsDir, folder);
