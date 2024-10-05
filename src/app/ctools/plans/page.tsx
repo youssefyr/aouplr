@@ -1,8 +1,8 @@
 "use client"
 import React, { useState, useEffect } from 'react';
-import Navbar from '../../_components/navbar';
+import Navbar from '@/app/_components/navbar';
 import ThemeSelect from '@/app/_components/themeselect';
-import { getPlansData, getJsonFileContents } from "../../../lib/getPlansData";
+import { getPlansData, getJsonFileContents } from "@/lib/getPlansData";
 
 interface Plan {
   type: string;

@@ -145,7 +145,6 @@ const ExamPage: React.FC = () => {
     return conflictingCourses;
   };
 
-
   const handleAddCourse = (course: string) => {
     if (!myCourses.some(c => c.course === course)) {
       const conflictingCourses = checkForConflicts(course, myCourses, allExamContentsWithTimes);
