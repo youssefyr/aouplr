@@ -3,7 +3,8 @@ import { promises as fsPromises } from 'fs';
 import path from 'path';
 
 const isDevelopment = process.env.NODE_ENV == "development"
-const plansDir = isDevelopment ? path.join(process.cwd(), "public", "data", "plans") : path.join(process.cwd(), "data", "plans");
+const plansDir = isDevelopment ? path.join(process.cwd(), "public", "data", "plans") :
+ path.join(process.cwd(),"public", "data", "plans");
 
 interface Plan {
   type: string;
@@ -32,16 +33,11 @@ export async function getPlansData() {
 
 export async function getJsonFileContents(type: string, name: string) {
   const filePath = isDevelopment ? path.join(process.cwd(), "public", "data", "plans", `${type}-${name}.json`)
-                    : path.join(process.cwd(), "data", "plans", `${type}-${name}.json`);
+                    : path.join(process.cwd(), "public", "data", "plans", `${type}-${name}.json`);
 
   console.log(`Reading plan file: ${filePath}`);
 
   try {
-    // Ensure the file is within the expected directory
-    if (!(await fsPromises.stat(filePath)).isFile()) {
-      throw new Error('Invalid file');
-    }
-
     const data = await fsPromises.readFile(filePath, 'utf8');
     return JSON.parse(data);
   } catch (err) {
