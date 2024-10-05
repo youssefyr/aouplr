@@ -20,8 +20,12 @@ async function getFiles(dirPath: string) {
   return files.filter(file => file.endsWith('.json'));
 }
 
+const isDevelopment = process.env.NODE_ENV == "development";
+
+
 export async function getExamsData() {
-  const examsDir = path.join(process.cwd(), "public", "data", "exams");
+  const examsDir = isDevelopment ? path.join(process.cwd(), "public", "data", "exams")
+                   : path.join(process.cwd(), "data", "exams");
   console.log(`Reading exams directory: ${examsDir}`);
   const files = await getFiles(examsDir);
   console.log(`Found exam files: ${files}`);
@@ -39,7 +43,8 @@ export async function getExamsData() {
 }
 
 export async function getJsonExamFileContents(fileName: string) {
-  const filePath = path.join(process.cwd(), "public", "data", "exams", fileName);
+  const filePath = isDevelopment ? path.join(process.cwd(), "public", "data", "exams", fileName)
+                  : path.join(process.cwd(), "data", "exams", fileName);
 
   console.log(`Reading exam file: ${filePath}`);
 
@@ -56,14 +61,16 @@ export async function getJsonExamFileContents(fileName: string) {
 }
 
 export const getAllCourses = async (): Promise<{ uniqueCourses: string[] }> => {
-  const dataDir = path.join(process.cwd(), "public", "data", "exams");
+  const dataDir = isDevelopment ? path.join(process.cwd(), "public", "data", "exams")
+                   : path.join(process.cwd(), "data", "exams");
   const allCourses: Set<string> = new Set();
 
   try {
     const files = await getFiles(dataDir);
 
     for (const file of files) {
-      const filePath = path.join(process.cwd(), "public", "data", "exams", file);
+      const filePath = isDevelopment ? path.join(process.cwd(), "public", "data", "exams", file)
+      : path.join(process.cwd(), "data", "exams", file);
       const fileContents = JSON.parse(await fsPromises.readFile(filePath, 'utf8'));
       Object.values(fileContents as ExamContents).forEach(details => {
         Object.values(details).forEach(courses => {
@@ -81,14 +88,16 @@ export const getAllCourses = async (): Promise<{ uniqueCourses: string[] }> => {
 }
 
 export const getAllExamContentsWithTimes = async (): Promise<{ [key: string]: string[] }> => {
-  const dataDir = path.join(process.cwd(), "public", "data", "exams");
+  const dataDir = isDevelopment ? path.join(process.cwd(), "public", "data", "exams")
+                   : path.join(process.cwd(), "data", "exams");
   const allExamContentsWithTimes: { [key: string]: string[] } = {};
 
   try {
     const files = await getFiles(dataDir);
 
     for (const file of files) {
-      const filePath = path.join(process.cwd(), "public", "data", "exams", file);
+      const filePath = isDevelopment ? path.join(process.cwd(), "public", "data", "exams", file)
+      : path.join(process.cwd(), "data", "exams", file);
       const fileContents = JSON.parse(await fsPromises.readFile(filePath, 'utf8'));
       Object.entries(fileContents as ExamContents).forEach(([date, details]) => {
         Object.entries(details).forEach(([time, courses]) => {
