@@ -1,6 +1,7 @@
 {
     "name": "AouPlr",
     "short_name": "aouplr",
+    "description": "A comprehensive tool designed to streamline and enhance your academic experience.",
     "theme_color": "#1a103d",
     "background_color": "#ffffff",
     "display": "standalone",
