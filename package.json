@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@khmyznikov/pwa-install": "^0.4.5",
     "markdown-to-jsx": "^7.5.0",
     "marked": "^14.1.2",
     "next": "14.2.14",
@@ -19,9 +20,11 @@
   },
   "devDependencies": {
     "@netlify/plugin-nextjs": "^5.7.3",
+    "@types/dom-chromium-installation-events": "^101.0.4",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/web-app-manifest": "^1.0.8",
     "daisyui": "^4.12.11",
     "eslint": "^8",
     "eslint-config-next": "14.2.14",
