@@ -77,7 +77,7 @@ export default function Home() {
             </Link>
 
             <code className="btn btn-ghost border border-neutral">
-              $ npm i app-name
+              $ PWA Ready
               <i className="fa-solid fa-copy text-lg text-secondary"></i>
             </code>
           </div>
