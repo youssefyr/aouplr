@@ -1,13 +1,18 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import { GpaCourse } from '@/lib/types';
+import React, { useState } from 'react';
 import Navbar from '../_components/navbar';
-import { themeChange } from 'theme-change';
+import ThemeSelect from '../_components/themeselect';
+
+
 
 const GpaCalculator: React.FC = () => {
-  const [courses, setCourses] = useState<{ name: string; creditHours: number; score: number }[]>([]);
+  const [courses, setCourses] = useState<GpaCourse[]>([]);
   const [name, setName] = useState<string>("");
   const [creditHours, setCreditHours] = useState<number | "">("");
   const [score, setScore] = useState<number | "">("");
+  const [exportedData, setExportedData] = useState<string | null>(null);
+  const [showAlert, setShowAlert] = useState(false);
 
   const addCourse = () => {
     if (name !== "" && creditHours !== "" && score !== "" && score <= 100) {
@@ -53,6 +58,44 @@ const GpaCalculator: React.FC = () => {
     return "Fail";
   };
 
+  const exportData = () => {
+    if (courses.length > 1) {
+    const jsonData = JSON.stringify(courses);
+    const encodedData = btoa(jsonData);
+    setExportedData(encodedData);
+    } else alert("No data to export.")
+  };
+
+  const copyToClipboard = () => {
+    if (exportedData) {
+      navigator.clipboard.writeText(exportedData).then(() => {
+        setShowAlert(true);
+        setTimeout(() => {setShowAlert(false); setExportedData("")}, 3000);
+      });
+    }
+  };
+
+  const importData = () => {
+    const encodedData = prompt('Please enter the encoded data:');
+    if (encodedData) {
+      try {
+        const jsonData = atob(encodedData);
+        const importedCourses: GpaCourse[] = JSON.parse(jsonData);
+        const newCourses = importedCourses.filter(
+          (importedCourse) => !courses.some((course) => course.name === importedCourse.name)
+        );
+        setCourses((prevCourses) => [...prevCourses, ...newCourses]);
+      } catch (error) {
+        console.error('Error importing data:', error);
+        alert('Invalid data. Please try again.');
+      }
+    }
+  };
+
+  const ClearData = () => {
+      setCourses([]);
+  }
+
   const gpa = parseFloat(calculateGpa());
 
   return (
@@ -69,7 +112,8 @@ const GpaCalculator: React.FC = () => {
         <input
           type="number"
           value={creditHours}
-          onChange={(e) => setCreditHours(e.target.value === "" ? "" : Number(e.target.value))}
+          onChange={(e) => { 
+            setCreditHours(e.target.value === "" ? "" : Number(e.target.value))}}
           className="input input-bordered w-full max-w-xs"
           placeholder="Credit Hours"
         />
@@ -110,6 +154,32 @@ const GpaCalculator: React.FC = () => {
         <h2 className="text-xl">GPA: {gpa.toFixed(2)}</h2>
         <h2 className="text-xl">Classification: {courses.length === 0 ? "Add a course" : classifyGpa(gpa)}</h2>
       </div>
+      <div className="mb-4">
+        <button className="btn btn-primary mr-2" onClick={exportData}>Export Data</button>
+        <button className="btn btn-secondary mr-2" onClick={importData}>Import Data</button>
+        <button className="btn btn-secondary" onClick={ClearData}>Clear Data</button>
+        {exportedData && (
+          <div className="mt-2">
+            <button className="btn btn-accent" onClick={copyToClipboard}>Copy</button>
+          </div>
+        )}
+      </div>
+      {showAlert && (
+        <div role="alert" className="alert alert-success">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 shrink-0 stroke-current"
+            fill="none"
+            viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>Data copied to clipboard!</span>
+        </div>
+      )}
       <div className="divider divider-info">Info</div>
       <div className="flex flex-wrap justify-start gap-4 mt-4">
       <div className="overflow-x-auto flex-auto">
@@ -154,9 +224,6 @@ const GpaCalculator: React.FC = () => {
 };
 
 const HomePage: React.FC = () => {
-    useEffect(() => {
-        themeChange(false);
-      }, []);
 
   return (
     <div>
@@ -164,6 +231,7 @@ const HomePage: React.FC = () => {
       <main className="p-4">
         <GpaCalculator />
       </main>
+      <ThemeSelect />
     </div>
   );
 };

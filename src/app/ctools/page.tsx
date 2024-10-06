@@ -8,8 +8,8 @@ const CourseTools: React.FC = () => {
     const tools = [
         { href: '/ctools/exams#fulltimetable', title: 'Exam Dates', description: 'Check the dates for your upcoming exams.', WIP: false },
         { href: '/ctools/exams#mycourses', title: 'Exam Date Conflict', description: 'Report and resolve exam date conflicts.', WIP: false },
-        { href: '/ctools/plans', title: 'Plans', description: 'View official study plans or Create and manage your study plans.', WIP: false },
-        { href: '/ctools/coursematerial', title: 'Course Material', description: 'View Materials to help you study for the Courses you want', WIP: true },
+        { href: '/ctools/plans', title: 'Plans', description: 'View official study plans or Create and manage your study plans.', WIP: true },
+        { href: '/ctools/coursematerial', title: 'Course Materials', description: 'View Materials to help you study for the Courses you want', WIP: true },
     ];
 
     return (

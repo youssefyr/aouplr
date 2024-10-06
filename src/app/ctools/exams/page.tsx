@@ -1,33 +1,11 @@
 "use client"
+import { Exam, ExamContents, Course, ExamContentsWithTimes } from '@/lib/types';
 import React, { useState, useEffect } from 'react';
+import LoadingPage from '@/app/_components/loading';
 import Navbar from '@/app/_components/navbar';
 import ThemeSelect from '@/app/_components/themeselect';
 import { getExamsData, getJsonExamFileContents, getAllCourses, getAllExamContentsWithTimes } from "@/lib/getExamData";
 
-interface Exam {
-  type: string;
-  name: string;
-  file: string;
-}
-
-interface ExamDetails {
-  dayname: string;
-  [time: string]: string[] | string; // time slots with course arrays or dayname
-}
-
-interface ExamContents {
-  [date: string]: ExamDetails;
-}
-
-interface Course {
-  course: string;
-  times: string[];
-  conflict: boolean;
-}
-
-interface ExamContentsWithTimes {
-  [key: string]: string[];
-}
 
 const ExamPage: React.FC = () => {
   const [exams, setExams] = useState<Exam[] | null>(null);
@@ -238,9 +216,7 @@ const ExamPage: React.FC = () => {
   
   
   
-  if (!exams) return ( <div>
-  <span className="loading loading-infinity loading-lg"></span> <div>Loading...</div></div>
-);
+  if (!exams) return ( <> <LoadingPage /> </> );
 
   const times = Array.from(new Set(Object.values(examContents || {}).flatMap(details => Object.keys(details).filter(key => key !== 'dayname'))));
 

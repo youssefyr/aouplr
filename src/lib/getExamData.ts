@@ -1,15 +1,7 @@
 "use server"
+import { ExamContents } from './types';
 import { promises as fsPromises } from 'fs';
 import path from 'path';
-
-interface ExamDetails {
-  dayname: string;
-  [time: string]: string[] | string; // time slots with course arrays or dayname
-}
-
-interface ExamContents {
-  [date: string]: ExamDetails;
-}
 
 const capitalizeFirstLetter = (string: string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);

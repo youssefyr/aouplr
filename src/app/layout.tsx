@@ -15,7 +15,7 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: "AOU plr",
-  description: "It's a simple progressive web application made to help",
+  description: "A comprehensive tool designed to streamline and enhance your academic experience.",
   generator: "Next.js",
   manifest: "/manifest.json",
   keywords: ["nextjs", "next14", "pwa", "aou", "aouplr", "aou plr"],
@@ -36,6 +36,8 @@ export const viewport = {
   width: "device-width",
   shrinkToFit: "no",
   viewportFit: "cover",
+  themeColor: "black"
+  
 };
 
 export default function RootLayout({

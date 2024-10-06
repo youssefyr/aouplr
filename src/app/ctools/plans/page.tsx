@@ -1,5 +1,6 @@
 "use client"
 import React, { useState, useEffect } from 'react';
+import LoadingPage from '@/app/_components/loading';
 import Navbar from '@/app/_components/navbar';
 import ThemeSelect from '@/app/_components/themeselect';
 import { getPlansData, getJsonFileContents } from "@/lib/getPlansData";
@@ -83,7 +84,7 @@ const Page: React.FC = () => {
     setPlanContents(null);
   };
 
-  if (!plans) return <div>Loading...</div>;
+  if (!plans) return <> <LoadingPage /> </>;
 
   const types = Array.from(new Set(plans.map(plan => plan.type)));
 

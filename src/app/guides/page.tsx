@@ -1,14 +1,11 @@
 "use client"
+import { Guide } from '@/lib/types';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Navbar from '@/app/_components/navbar';
 import ThemeSelect from '@/app/_components/themeselect';
 import { getGuides } from '@/lib/guides';
 
-interface Guide {
-  name: string;
-  path: string;
-}
 
 const Guides: React.FC = () => {
   const [guides, setGuides] = useState<Guide[]>([]);

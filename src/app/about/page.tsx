@@ -1,6 +1,9 @@
 import React from 'react';
 import Navbar from '../_components/navbar';
 import ThemeSelect from '../_components/themeselect';
+import Link from 'next/link';
+
+
 const About: React.FC = () => {
   return (
     <div>
@@ -35,6 +38,13 @@ const About: React.FC = () => {
               <p>
               If you have any questions or feedback, feel free to reach out to Youssef Reda. Your input is valuable and helps improve the project.
               </p>
+            </div>
+          </div>
+          <div className="card bg-base-100 shadow-xl mt-4">
+            <div className="card-body">
+              <h2 className="card-title">Copyright</h2>
+              <p>
+              Copyright © 2024 Youssef Reda - This program is free software under the terms of the <Link href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank">GNU General Public License</Link>.              </p>
             </div>
           </div>
         </div>

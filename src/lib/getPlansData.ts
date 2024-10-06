@@ -1,4 +1,5 @@
 "use server"
+import { Plan } from './types';
 import { promises as fsPromises } from 'fs';
 import path from 'path';
 
@@ -6,10 +7,7 @@ const isDevelopment = process.env.NODE_ENV == "development"
 const plansDir = isDevelopment ? path.join(process.cwd(), "public", "data", "plans") :
  path.join(process.cwd(),"public", "data", "plans");
 
-interface Plan {
-  type: string;
-  name: string;
-}
+
 
 export async function getPlansData() {
   console.log(`Reading plans directory: ${plansDir}`);
